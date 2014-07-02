@@ -16,23 +16,24 @@
     }
   </style>
 </head>
-<body>
+<body ng-app="todoApp" ng-controller="TodoCtrl">
   <label for="current-todo">
-    Todo:<input type="text">
+    Todo:<input type="text" ng-model="newTodo.title">
   </label>
-  <button class="btn btn-primary">Add</button>
+  <button class="btn btn-primary" ng-click="addTodo(newTodo); reset();" ng-disabled="newTodo.title.length == 0;">Add</button>
   <ul>
     <!-- ng-cloack vs ng-bind -->
     <!-- duplications -->
-    <li>
-      <label for="complete-input">
-        <input type="checkbox" name="complete-input">
-        <span></span>
+    <li ng-repeat="todoItem in todos">
+      <label for="complete-input" ng-class="{completed: todoItem.is_completed}">
+        <input type="checkbox" name="complete-input" ng-model="todoItem.is_completed">
+        <span>{{todoItem.title}}</span>
       </label>
-      <a href="#">Delete</a>
+      <a href="#" ng-click="delete(todoItem);">Delete</a>
     </li>
   </ul>
   <script src="bower_components/angular/angular.js"></script>
+  <script src="src/app.js"></script>
   <script src="src/TodoCtrl.js"></script>
 </body>
 </html>
