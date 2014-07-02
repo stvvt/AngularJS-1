@@ -5,33 +5,59 @@
   <title></title>
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
   <style>
-    ul {
-      list-style: none;
-    }
     .completed {
       text-decoration: line-through;
-    }
-    body {
-      padding: 15px;
     }
   </style>
 </head>
 <body ng-app="todoApp" ng-controller="TodoCtrl">
-  <label for="current-todo">
-    Todo:<input type="text" ng-model="newTodo.title">
-  </label>
-  <button class="btn btn-primary" ng-click="addTodo(newTodo); reset();" ng-disabled="newTodo.title.length == 0;">Add</button>
-  <ul>
-    <!-- ng-cloack vs ng-bind -->
-    <!-- duplications -->
-    <li ng-repeat="todoItem in todos">
-      <label for="complete-input" ng-class="{completed: todoItem.is_completed}">
-        <input type="checkbox" name="complete-input" ng-model="todoItem.is_completed">
-        <span>{{todoItem.title}}</span>
-      </label>
-      <a href="#" ng-click="delete(todoItem);">Delete</a>
-    </li>
-  </ul>
+  <div class="container">
+  <h1>TODO App</h1>
+
+  <div class="panel panel-default">
+
+    <form class="panel-heading">
+      <div class="form-group">
+        <label for="new-todo-title" class="control-label">Todo</label>
+        <div class="input-group">
+          <input type="text" class="form-control" name="new-todo-title" ng-model="newTodo.title">
+          <span class="input-group-btn">
+            <button class="btn btn-primary" ng-click="add(newTodo); reset();" ng-disabled="newTodo.title.length == 0;">
+              <i class="glyphicon" ng-class="{'glyphicon-plus-sign': mode === 'Add', 'glyphicon-ok': mode === 'OK'}"></i> {{mode}}
+            </button>
+          </span>
+        </div>
+      </div>
+    </form>
+
+    <ul class="list-group">
+      <!-- ng-cloack vs ng-bind -->
+      <!-- duplications -->
+      <li class="list-group-item" ng-repeat="todoItem in todos" ng-class="{'active': newTodo === todoItem}">
+        <div class="checkbox">
+          <label ng-class="{'completed text-muted': todoItem.is_completed}">
+            <input type="checkbox" ng-model="todoItem.is_completed"> <span>{{todoItem.title}}</span>
+          </label>
+          
+          <span ng-hide="todoItem === newTodo">
+            <span>
+              <i class="glyphicon glyphicon-edit text-warning"></i>
+              <a href="#" rel="edit" ng-click="edit(todoItem);">edit</a>
+            </span>
+
+            <span class="pull-right">
+              <i class="glyphicon glyphicon-remove text-danger"></i>
+              <a href="#" rel="delete" ng-click="remove(todoItem);">delete</a>
+            </span>
+          </span>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+
+  </div>
+
   <script src="bower_components/angular/angular.js"></script>
   <script src="src/app.js"></script>
   <script src="src/TodoCtrl.js"></script>
