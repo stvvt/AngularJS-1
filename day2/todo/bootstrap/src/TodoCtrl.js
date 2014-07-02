@@ -7,21 +7,29 @@ TodoControllers.controller('TodoCtrl', ['$scope', function($scope)
 	$scope.todos = [];
 
 	($scope.reset = function () {
-		this.newTodo = Object.create({
+		$scope.newTodo = Object.create({
 			title: '',
 			is_completed: false
 		});
-	}).call($scope);
+		$scope.mode = 'Add';
+	})();
 
-	$scope.addTodo = function (newTodo) {
-		this.todos.push(newTodo);
+	$scope.add = function (newTodo) {
+		if ($scope.todos.indexOf(newTodo) < 0) {
+			$scope.todos.push(newTodo);
+		}
 	};
 
-	$scope.delete = function (todoItem) {
-		var idx = this.todos.indexOf(todoItem);
+	$scope.edit = function (todoItem) {
+		$scope.newTodo = todoItem;
+		$scope.mode    = 'OK';
+	};
+
+	$scope.remove = function (todoItem) {
+		var idx = $scope.todos.indexOf(todoItem);
 
 		if (idx >= 0) {
-			this.todos.splice(idx, 1);
+			$scope.todos.splice(idx, 1);
 		}
 	}
 }]);
