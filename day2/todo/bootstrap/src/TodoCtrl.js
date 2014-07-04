@@ -1,28 +1,39 @@
 var TodoControllers = angular.module('TodoControllers', []);
 
-TodoControllers.controller('TodoCtrl', ['$scope', function($scope) 
+TodoControllers.controller('TodoCtrl', ['$scope', '$filter', function($scope, $filter) 
 {
 	'use strict';
 
-	$scope.todos = [];
+	$scope.todos = [{
+		title: 'TODO 1',
+		is_completed: false
+	}, {
+		title: 'TODO 2',
+		is_completed: true
+	}];
 
 	($scope.reset = function () {
-		$scope.newTodo = Object.create({
+		$scope.newTodo = {
 			title: '',
 			is_completed: false
-		});
-		$scope.mode = 'Add';
+		};
+
+		$scope.editingTodo = null;
 	})();
 
-	$scope.add = function (newTodo) {
-		if ($scope.todos.indexOf(newTodo) < 0) {
-			$scope.todos.push(newTodo);
+	$scope.add = function () {
+		if ($scope.editingTodo) {
+			$scope.editingTodo = angular.copy($scope.newTodo, $scope.editingTodo);
+		} else {
+			$scope.todos.push($scope.newTodo);
 		}
+
+		$scope.reset();
 	};
 
 	$scope.edit = function (todoItem) {
-		$scope.newTodo = todoItem;
-		$scope.mode    = 'OK';
+		$scope.newTodo     = angular.copy(todoItem);
+		$scope.editingTodo = todoItem;
 	};
 
 	$scope.remove = function (todoItem) {
@@ -31,5 +42,13 @@ TodoControllers.controller('TodoCtrl', ['$scope', function($scope)
 		if (idx >= 0) {
 			$scope.todos.splice(idx, 1);
 		}
+	};
+
+	$scope.isEditing = function (item) {
+		if (item === undefined) {
+			return $scope.editingTodo !== null;
+		}
+
+		return $scope.editingTodo === item;
 	}
 }]);
