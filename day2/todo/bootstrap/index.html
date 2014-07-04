@@ -22,8 +22,11 @@
         <div class="input-group">
           <input type="text" class="form-control" name="new-todo-title" ng-model="newTodo.title">
           <span class="input-group-btn">
-            <button class="btn btn-primary" ng-click="add(newTodo); reset();" ng-disabled="newTodo.title.length == 0;">
-              <i class="glyphicon" ng-class="{'glyphicon-plus-sign': mode === 'Add', 'glyphicon-ok': mode === 'OK'}"></i> {{mode}}
+            <button class="btn btn-primary" ng-click="add();" ng-disabled="newTodo.title.length == 0;">
+              <i class="glyphicon" ng-class="{'glyphicon-plus-sign': !isEditing(), 'glyphicon-ok': isEditing()}"></i> {{isEditing() ? 'OK' : 'Add'}}
+            </button>
+            <button class="btn btn-default" ng-click="reset();" ng-show="isEditing()">
+              <i class="glyphicon glyphicon-cross"></i> Cancel
             </button>
           </span>
         </div>
@@ -33,13 +36,13 @@
     <ul class="list-group">
       <!-- ng-cloack vs ng-bind -->
       <!-- duplications -->
-      <li class="list-group-item" ng-repeat="todoItem in todos" ng-class="{'active': newTodo === todoItem}">
+      <li class="list-group-item" ng-repeat="todoItem in todos" ng-class="{'active': isEditing(todoItem)}">
         <div class="checkbox">
           <label ng-class="{'completed text-muted': todoItem.is_completed}">
             <input type="checkbox" ng-model="todoItem.is_completed"> <span>{{todoItem.title}}</span>
           </label>
           
-          <span ng-hide="todoItem === newTodo">
+          <span ng-hide="isEditing(todoItem)">
             <span>
               <i class="glyphicon glyphicon-edit text-warning"></i>
               <a href="#" rel="edit" ng-click="edit(todoItem);">edit</a>
