@@ -1,4 +1,4 @@
-var Provider = (function () 
+var Provider = (function Provider() 
 {
 	'use strict';
 
@@ -18,10 +18,6 @@ var Provider = (function ()
 	};
 
 	return {
-		DIRECTIVES_SUFFIX: "Directive",
-
-		CONTROLLERS_SUFFIX: "Controller",
-
 		get: function (name, locals) {
 			locals = locals || [];
 
@@ -65,3 +61,7 @@ var Provider = (function ()
 		}
 	};
 })();
+
+Provider.DIRECTIVES_SUFFIX  = "Directive";
+Provider.CONTROLLERS_SUFFIX = "Controller";
+

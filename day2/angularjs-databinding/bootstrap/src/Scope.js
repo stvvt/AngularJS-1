@@ -55,10 +55,10 @@ Scope.prototype.$destroy = function () {
 }
 
 Scope.prototype.$digest = function () {
-	var isDirty = true;
-	var currentVal ,lastVal;
+	var isDirty;
+	var currentVal, lastVal;
 
-	while ($isDirty) {
+	do {
 		isDirty = false;
 		for (var i = 0; i < this.$$watchers.length; i += 1) {
 			currentVal = this.$eval(this.$$watchers[i].exp);
@@ -70,7 +70,8 @@ Scope.prototype.$digest = function () {
 				this.$$watchers[i].fn.call(this, currentVal, lastVal);
 			}
 		}
-	}
+	} while ($isDirty);
+
 
 	for (var i = 0; i < this.$$children.length; i += 1) {
 		this.$$children[i].$digest();
