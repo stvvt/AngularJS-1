@@ -22,7 +22,9 @@ var Provider = (function Provider()
 			locals = locals || [];
 
 			if (!_.cache[name]) {
-				_.cache[name] = this.invoke(_.providers[name], locals);
+				if (_.providers[name]) {
+					_.cache[name] = this.invoke(_.providers[name], locals);
+				}
 			}
 
 			return _.cache[name];
@@ -33,7 +35,7 @@ var Provider = (function Provider()
 		}, 	
 
 		controller: function (name, factoryMethod) {
-			_.register(name + this.CONTROLLERS_SUFFIX, factoryMethod);
+			_.register(name + this.CONTROLLERS_SUFFIX, function () { return factoryMethod; });
 		},
 
 		service: function (name, factoryMethod) {

@@ -1,3 +1,5 @@
+
+
 function Scope(parent, id)
 {
 	'use strict';
@@ -35,11 +37,9 @@ Scope.prototype.$watch = function (expr, fn) {
 }
 
 Scope.prototype.$new = function () {
-	var result;
+	var result = Object.create(this);
 
-	result.prototype = Object.create(this.prototype);
-
-	result.$id = ++Scope.counter;
+	Scope.call(result, this, ++Scope.counter);
 
 	this.$$children.push(result);
 
@@ -47,10 +47,10 @@ Scope.prototype.$new = function () {
 }
 
 Scope.prototype.$destroy = function () {
-	var idx = $this.$parent.$$children.indexOf(this);
+	var idx = this.$parent.$$children.indexOf(this);
 
 	if (idx >= 0) {
-		$this.$parent.$$children.splice(idx, 1);
+		this.$parent.$$children.splice(idx, 1);
 	}
 }
 
@@ -69,8 +69,10 @@ Scope.prototype.$digest = function () {
 
 				this.$$watchers[i].fn.call(this, currentVal, lastVal);
 			}
+
+			this.$$watchers[i].last = currentVal;
 		}
-	} while ($isDirty);
+	} while (isDirty);
 
 
 	for (var i = 0; i < this.$$children.length; i += 1) {

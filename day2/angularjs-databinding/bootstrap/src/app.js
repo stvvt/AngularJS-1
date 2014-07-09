@@ -1,15 +1,5 @@
-
-
-Provider.service('Foo', function Foo(Bar) {
-	alert(Bar.getValue());
+Provider.controller('TodoCtrl', function ($scope) {
+	$scope.todos = [1, 2, 3];
 });
 
-Provider.service('Bar', function Bar() {
-	return {
-		getValue: function () {
-			return 42;
-		}
-	};
-});
-
-Provider.get('Foo');
+DOMCompiler.bootstrap(document.body);
