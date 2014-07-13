@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="todo">
 <head>
   <meta charset="UTF-8">
   <title></title>
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
 </head>
-<body>
-  <label for="title-input">Todo title:
-    <input type="text" name="title-input" class="form-input">
-  </label>
-  <button class="btn btn-primary">Add</button>
+<body ng-controller="TodoCtrl">
+  <form ng-submit="add()">
+    <label for="title-input">Todo title:
+      <input type="text" name="title-input" class="form-input" ng-model="todoTitle">
+    </label>
+    <button class="btn btn-primary" type="submit">Add</button>
+  </form>
   <ul>
-    <li>
-      <a href="#">[X]</a>
+    <li ng-repeat="todo in todos">
+      <a href="#" ng-click="remove(todo)">{{todo.title}}</a>
     </li>
   </ul>
   <script src="bower_components/angular/angular.js"></script>
