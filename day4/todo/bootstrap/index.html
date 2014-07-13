@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="TodoApp">
 <head>
   <meta charset="UTF-8">
   <title></title>
@@ -16,20 +16,20 @@
     }
   </style>
 </head>
-<body>
+<body ng-controller="TodoCtrl">
   <label for="current-todo">
-    Todo:<input type="text">
+    Todo:<input type="text" ng-model="newTodo.title">
   </label>
-  <button class="btn btn-primary">Add</button>
+  <button class="btn btn-primary" ng-click="add()">Add</button>
   <ul>
     <!-- ng-cloack vs ng-bind -->
     <!-- duplications -->
-    <li>
-      <label for="complete-input">
-        <input type="checkbox" name="complete-input">
-        <span></span>
+    <li ng-repeat="todo in todos">
+      <label for="complete-input" ng-class="{completed: todo.is_completed}">
+        <input type="checkbox" name="complete-input" ng-model="todo.is_completed">
+        <span ng-bind="$index+1"></span>. <span ng-bind="todo.title"></span>
       </label>
-      <a href="#">Delete</a>
+      <a href="#" ng-click="remove(todo)">Delete</a>
     </li>
   </ul>
   <script src="bower_components/angular/angular.js"></script>
