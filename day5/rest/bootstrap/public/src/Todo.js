@@ -42,9 +42,11 @@ TodoApp.factory('Todo', function ($http) {
 	}
 
 	Todo.prototype.destroy = function() {
+		var self = this;
+
 		$http.delete('/todo/' + this.id)
 			.success	(function (data) {
-				var idx = todos.indexOf(this);
+				var idx = todos.indexOf(self);
 				todos.splice(idx, 1);
 			});
 	}
