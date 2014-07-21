@@ -1,12 +1,12 @@
 <h3>Todo items</h3>
-<p>
+<p ng-hide="todos.length > 0">
   No todo items
 </p>
-<ul class="todos">
+<ul class="todos" ng-show="todos.length > 0">
   <li data-ng-repeat="todo in todos" data-ng-class="(todo.completed) ? 'completed' : 'non-completed'">
-    <input type="checkbox" data-ng-model="todo.completed">
+    <input type="checkbox" data-ng-model="todo.completed" ng-change="updateState(todo)">
     <a href="#/todo/{{todo.id}}">{{todo.title}}</a>
   </li>
 </ul>
 <br>
-<a>Add</a>
+<a href="#/add">Add</a>

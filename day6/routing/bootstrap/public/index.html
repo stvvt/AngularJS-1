@@ -6,9 +6,9 @@
   <link rel="stylesheet" href="public/components/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="css/main.css">
 </head>
-<body>
+<body ng-app="todo">
   <a href="#/">Home</a><br>
-  <div class="page-wrapper"></div>
+  <div class="page-wrapper" ng-view></div>
   <script src="public/components/angular/angular.js"></script>
   <script src="public/components/angular-route/angular-route.js"></script>
   <script src="src/app.js"></script>
